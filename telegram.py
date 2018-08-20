@@ -24,22 +24,18 @@ client = TelegramClient(
     proxy=None
 )
 
-#last_welcome = None
-
-# last welcome loop resulted in error - should create a list of UIDs that have received a tchotchke
+last_welcome = []
 
 @client.on(events.ChatAction)
 async def handler(event):
     if event.user_joined:
-#        global last_welcome
-#        if last_welcome is not None:
-#            await last_welcome.delete()
-          await event.reply('/tip 1000 CommunityNodeToken')
-          await event.reply('/tip 2')
-#        last_welcome = 
-          await event.reply('Welcome! http://www.communitynode.org/support/starter')
+        if event.user.id not in last_welcome:
+            await event.reply('/tip 1000 CommunityNodeToken')
+            await event.reply('/tip 2')
+            last_welcome.append(event.user.id)
+        else:
+            await event.reply('Welcome! http://www.communitynode.org/support/starter')
 
-	
 
 
 
